@@ -1,0 +1,11 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+    <ActionBar title="FoodTravel" />
+
+    <GridLayout rows="*, *, *, *" height="250">
+        <TextField row="0" hint="Логин\Номер телефона" />
+        <TextField row="1" hint="Пароль" />
+        <Button row="2" text="Войти" class="login-primary" tap="{{ onLoginButtonTap }}" />
+        <Button row="3" text="Регистрация" class="login-secondary"
+            tap="{{ onRegistrationButtonTap }}" />
+    </GridLayout>
+</Page>

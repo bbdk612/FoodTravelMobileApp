@@ -1,0 +1,11 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+  navigatingTo="navigatingTo">
+  <ActionBar title="{{ reustarant.title }}" />
+
+  <ScrollView>
+    <StackLayout>
+      <Image margin="10" stretch="aspectFill" src="{{ reustarant.photo }}" />
+      <Label text="{{ reustarant.description }}" />
+    </StackLayout>
+  </ScrollView>
+</Page>
