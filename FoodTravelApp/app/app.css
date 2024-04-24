@@ -1,22 +1,10 @@
 @import "@nativescript/theme/css/core.css";
 @import "@nativescript/theme/css/default.css";
+@import "./styles/login-page.css";
 
 Button {
   border-radius: 10px;
   font-size: 20;
-}
-
-Button.login-primary {
-  font-size: 20;
-  font-weight: 700;
-  background-color: #ffbd33;
-  border-radius: 10px;
-}
-
-Button.login-secondary {
-  font-size: 20;
-  background-color: #383838;
-  border-radius: 10px;
 }
 
 ListView.itemTemplate {
