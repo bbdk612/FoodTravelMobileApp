@@ -3,7 +3,7 @@ import "@nativescript/firebase-database";
 import { FoodModel } from "~/models";
 
 export class FoodService {
-  private _foodData: string[];
+  private _foodIds: string[];
 
   private static _food = new FoodService();
 
@@ -28,12 +28,33 @@ export class FoodService {
           return false;
         });
         console.log(foodObjs);
-        this._foodData = foodObjs;
+        this._foodIds = foodObjs;
       });
   }
 
-  get food(): string[] {
-    return this._foodData;
+  get foodIds(): string[] {
+    return this._foodIds;
+  }
+
+  async updateFood(food: FoodModel): Promise<boolean> {
+    firebase()
+      .database()
+      .ref(`/Food/${food.id}`)
+      .set({
+        name: food.title,
+        description: food.description,
+        photoURL: food.photo,
+        price: food.price,
+        kitchenId: food.reustarantId,
+      })
+      .then(() => {
+        return true;
+      })
+      .catch((e) => {
+        console.log(e);
+        return false;
+      });
+    return false;
   }
 
   async getFoodById(id: string): Promise<FoodModel> {
@@ -50,6 +71,7 @@ export class FoodService {
           description: String(values["description"]),
           photo: String(values["photoURL"]),
           price: Number(values["price"]),
+          ingridients: values["ingridients"],
           reustarantId: String(values["kitchenId"]),
         };
 
