@@ -28,6 +28,27 @@ export class ReustarantService {
     return this._reustarantData;
   }
 
+  async updateReustarant(reustarant: ReustarantModel): Promise<boolean> {
+    firebase()
+      .database()
+      .ref(`/Kitchen/${reustarant.id}`)
+      .set({
+        name: reustarant.title,
+        description: reustarant.description,
+        photoURL: reustarant.photo,
+        phoneNum: reustarant.phoneNum,
+        adress: reustarant.adress,
+      })
+      .then(() => {
+        return true;
+      })
+      .catch((e) => {
+        console.log(e);
+        return false;
+      });
+    return false;
+  }
+
   async getReustarantById(id: string): Promise<ReustarantModel> {
     let reustarantObj: ReustarantModel = await firebase()
       .database()
