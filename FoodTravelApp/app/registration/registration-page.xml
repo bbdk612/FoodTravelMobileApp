@@ -1,16 +1,19 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
   <ActionBar title="FoodTravel" />
 
-  <GridLayout rows="*, *, *, *, *, *, *, *" height="250">
-    <TextField row="0" keyboardType="email" hint="Почта" />
-    <TextField row="1" keyboardType="phone" hint="Номер телефона" />
+  <GridLayout rows="*, *, *, *, *, *, *, *">
+    <TextField row="0" keyboardType="email" hint="Почта" textChange="{{ onEmailTextChange }}" />
+    <TextField row="1" keyboardType="phone" hint="Номер телефона"
+      textChange="{{ onPhoneNumberTextChange }}"
+    />
 
-    <TextField row="2" hint="Фамилия" />
-    <TextField row="3" hint="Имя" />
-    <TextField row="4" secure="true" hint="Пароль" />
-    <TextField row="5" secure="true" hint="Подтвердите ароль" />
-    <Button row="6" text="Регистрация" class="login-primary" tap="{{ onRegistrationButtonTap }}" />
+    <TextField row="2" hint="Фамилия" textChange="{{ onSecondTextChange }}" />
+    <TextField row="3" hint="Имя" textChange="{{ onFirstNameTextChange }}" />
+    <TextField row="4" secure="true" hint="Пароль" textChange="{{ onPassTextChange }}" />
+    <TextField row="5" secure="true" hint="Подтвердите ароль"
+      textChange="{{ onPassConfirmTextChange }}" />
+    <Button row="6" text="Регистрация" class="login-primary" tap="{{ onRegistrationTap }}" />
     <Button row="7" text="Войти" class="login-secondary"
-      tap="{{ onLoginButtonTap }}" />
+      tap="{{ onLoginTap }}" />
   </GridLayout>
 </Page>

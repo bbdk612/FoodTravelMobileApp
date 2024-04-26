@@ -1,0 +1,8 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+  <ActionBar title="FoodTravel" />
+
+  <GridLayout rows="*, *, *, *" height="250">
+    <Button row="3" text="TestingFoodDB"
+      tap="{{ onTestTap }}" />
+  </GridLayout>
+</Page>

@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:272307473826:android:f751233e52191f155636fb",
+        "mobilesdk_app_id": "1:272307473826:android:265b0b595da080645636fb",
         "android_client_info": {
-          "package_name": "ru.ugrastudents.FoodTravel"
+          "package_name": "ru.ugrastudents.FoodTravelApp"
         }
       },
       "oauth_client": [],

@@ -1,36 +1,65 @@
+import { FirebaseOptions, firebase } from "@nativescript/firebase-core";
+import "@nativescript/firebase-database";
 import { FoodModel } from "~/models";
 
 export class FoodService {
-  private _foodData: FoodModel[] = [
-    {
-      id: 1,
-      title: "Суши",
-      photo: "~/assets/sushi.jpeg",
-      description: "Придумайте сами",
-      price: 10,
-      reustarantId: 2,
-    },
-    {
-      id: 2,
-      title: "Шаурма по-пекински",
-      photo: "~/assets/shaurma.jpg",
-      description: "Придумайте сами",
-      price: 20,
-      reustarantId: 1,
-    },
-  ];
+  private _foodData: string[];
 
   private static _food = new FoodService();
 
+  // const config = new FirebaseOptions();
+  // const secondaryApp = firebase.initializeApp(config, "SECONDARY_APP");
+  // const database = firebase().database(secondaryApp);
+
   static receiveFood(): FoodService {
+    this._food.allFoodData();
     return this._food;
   }
 
-  get food(): FoodModel[] {
+  private allFoodData(): void {
+    firebase()
+      .database()
+      .ref("/Food")
+      .on("value", (s) => {
+        // console.log(s.numChildren());
+        let foodObjs: string[] = [];
+        s.forEach((c) => {
+          foodObjs.push(c.key);
+          return false;
+        });
+        console.log(foodObjs);
+        this._foodData = foodObjs;
+      });
+  }
+
+  get food(): string[] {
     return this._foodData;
   }
 
-  findFoodById(id: number): FoodModel {
-    return this._foodData.find((food) => food.id === id);
+  async getFoodById(id: string): Promise<FoodModel> {
+    let foodObj: FoodModel = await firebase()
+      .database()
+      .ref("/Food/" + id)
+      .once("value")
+      .then((snapshot) => {
+        let values = snapshot.val();
+
+        let obj = {
+          id,
+          title: String(values["name"]),
+          description: String(values["description"]),
+          photo: String(values["photoURL"]),
+          price: Number(values["price"]),
+          reustarantId: String(values["kitchenId"]),
+        };
+
+        return obj;
+      })
+      .catch((e) => {
+        console.log(e);
+        return undefined;
+      });
+
+    return foodObj;
   }
 }
