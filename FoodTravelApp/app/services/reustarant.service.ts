@@ -41,7 +41,7 @@ export class ReustarantService {
           title: String(values["name"]),
           description: String(values["description"]),
           photo: String(values["photoURL"]),
-          phoneNum: Number(values["phoneNum"]),
+          phoneNum: String(values["phoneNum"]),
           adress: String(values["adress"]),
         };
 
