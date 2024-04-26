@@ -28,9 +28,30 @@ export class ReustarantService {
     return this._reustarantData;
   }
 
-  getReustarantById(id: number): ReustarantModel | undefined {
-    return (
-      this._reustarantData.find((restData) => restData.id === id) || undefined
-    );
+  async getReustarantById(id: string): Promise<ReustarantModel> {
+    let reustarantObj: ReustarantModel = await firebase()
+      .database()
+      .ref("/Food/" + id)
+      .once("value")
+      .then((snapshot) => {
+        let values = snapshot.val();
+
+        let obj = {
+          id,
+          title: String(values["name"]),
+          description: String(values["description"]),
+          photo: String(values["photoURL"]),
+          phoneNum: Number(values["phoneNum"]),
+          adress: String(values["adress"]),
+        };
+
+        return obj;
+      })
+      .catch((e) => {
+        console.log(e);
+        return undefined;
+      });
+
+    return reustarantObj;
   }
 }
