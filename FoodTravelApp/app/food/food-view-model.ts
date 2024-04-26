@@ -5,9 +5,13 @@ import { FoodService } from "~/services";
 export class FoodViewModel extends Observable {
   private _foodData: FoodModel;
 
-  constructor(private _context: { foodId: number }) {
+  constructor(private _context: { foodId: string }) {
     super();
-    this._foodData = FoodService.receiveFood().findFoodById(
+    this.receiveFoodData();
+  }
+
+  private async receiveFoodData(): Promise<void> {
+    this._foodData = await FoodService.receiveFood().getFoodById(
       this._context.foodId
     );
   }

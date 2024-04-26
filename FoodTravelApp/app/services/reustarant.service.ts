@@ -1,31 +1,30 @@
+import { firebase } from "@nativescript/firebase-core";
 import { ReustarantModel } from "~/models";
 
 export class ReustarantService {
-  private _reustarantData: ReustarantModel[] = [
-    {
-      id: 1,
-      title: "ХачуХача",
-      photo: "~/assets/hachuhacha.jpg",
-      description:
-        "Лучшая еда от равшана, что прямом вай пальчики оближешь, причем не только себе)))",
-    },
-    {
-      id: 2,
-      title: "ЕбаУеба",
-      photo: "~/assets/ebaueba.jpg",
-      description:
-        "Если вашей девушки не выступят слезы счасться от нашего Куни Ли, то вам с ней не о чем больше разговаривать",
-    },
-  ];
+  private _reustarantIds: string[];
 
   private static _reustarants = new ReustarantService();
 
   static receiveReustarants(): ReustarantService {
+    this._reustarants.receiveReustarantIds();
     return this._reustarants;
   }
 
-  get reustarants(): ReustarantModel[] {
-    return this._reustarantData;
+  private receiveReustarantIds(): void {
+    firebase()
+      .database()
+      .ref("/Kitchen")
+      .on("value", (s) => {
+        s.forEach((c) => {
+          this._reustarantIds.push(c.key);
+          return false;
+        });
+      });
+  }
+
+  get reustarantIds(): string[] {
+    return this._reustarantIds;
   }
 
   async updateReustarant(reustarant: ReustarantModel): Promise<boolean> {

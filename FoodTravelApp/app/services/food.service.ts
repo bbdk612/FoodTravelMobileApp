@@ -12,11 +12,11 @@ export class FoodService {
   // const database = firebase().database(secondaryApp);
 
   static receiveFood(): FoodService {
-    this._food.allFoodData();
+    this._food.receiveFoodIds();
     return this._food;
   }
 
-  private allFoodData(): void {
+  private receiveFoodIds(): void {
     firebase()
       .database()
       .ref("/Food")
@@ -27,7 +27,7 @@ export class FoodService {
           foodObjs.push(c.key);
           return false;
         });
-        console.log(foodObjs);
+        // console.log(foodObjs);
         this._foodIds = foodObjs;
       });
   }
